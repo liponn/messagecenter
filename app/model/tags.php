@@ -53,4 +53,18 @@ PHPTPL;
     public function getSendCh($tagName){
         return isset($this->tagSendSetting[$tagName]) ? $this->tagSendSetting[$tagName] : null;
     }
+
+
+    public  function getIdByName($tagName){
+        $row = $this->fields('id')->where(['name' => $tagName])->get()->row();
+        if($row)
+        {
+            $row->id;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
 }

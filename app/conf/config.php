@@ -25,6 +25,11 @@ return [
     "DB_DEBUG" => false, //调试模式
     "DB_CHARSET" => 'utf8', //编码
 
+    'SWOOLE_IP' => '127.0.0.1',
+    'SWOOLE_PORT' => 6767,
+    'SWOOLE_DAEMONIZE' => false,
+    'SWOOLE_WORKER_NUM' => 8,
+
     "PAGE_SIZE" => 20, //分页每页数量
 
 
