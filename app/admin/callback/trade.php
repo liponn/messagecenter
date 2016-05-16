@@ -1,1 +1,0 @@
-<?php defined("__FRAMEWORKNAME__") or die("No permission to access!");

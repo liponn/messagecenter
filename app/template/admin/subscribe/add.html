@@ -1,0 +1,72 @@
+{include file="tpl_head.html"}
+
+<style type="text/css">
+    label {
+        width: 10%
+    }
+
+    input {
+        width: 40%
+    }
+</style>
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+    <h2 class="sub-header">订阅添加&nbsp;&nbsp; </h2>
+
+    <form class="form-horizontal form_sea" action="" method="POST">
+        <input type="hidden" name="id" value="">
+        <fieldset>
+            <label>Tag标签<code>*</code></label>
+            <input type="text" placeholder="输入标签英文名称" name="tag" value="">
+        </fieldset>
+
+        <fieldset>
+            <label>请求地址<code>*</code></label>
+            <input type="text" placeholder="输入请求地址" name="address" value="">
+        </fieldset>
+        <fieldset>
+            <label>描述<code></code></label>
+            <textarea rows="7" name="desc" cols="65%" placeholder="输入标签描述"></textarea>
+        </fieldset>
+        <fieldset style="margin-left: 20%; margin-top: 10px;">
+            <div class="btn btn-primary" id="submit">提交</div>
+        </fieldset>
+    </form>
+
+</div>
+
+<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+
+    $("#submit").click(function () {
+        var tag = $("input[name='tag']").val();
+        var address = $("input[name='address']").val();
+        var desc = $("textarea[name='desc']").val();
+        var id = $("input[name=id]").val();
+        if (tag == '') {
+            alert("请输入tag标签");
+            return false;
+        }
+        if (address == '') {
+            alert("请输入tag地址");
+            return false;
+        }
+        $.ajax({
+            "url": "subscribe.php?action=add",
+            "type": "post",
+            "dataType": "json",
+            "data": { 'tag': tag, 'address': address, "desc": desc,"id":id },
+            success: function (data) {
+                alert(data.msg);
+                if(data.status)
+                {
+                    window.location.href="subscribe.php?action=lst";
+                }
+            }
+        });
+
+    });
+</script>
+</body>
+</html>

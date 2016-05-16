@@ -1,12 +1,11 @@
 <?php
 namespace Model;
-class AdminUser extends Model
+class Log extends Model
 {
     public function __construct($pkVal = '')
     {
-        parent::__construct('admin_user');
+        parent::__construct('log');
         if ($pkVal)
             $this->initArData($pkVal);
     }
-
 }

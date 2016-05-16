@@ -1,78 +1,6 @@
 <?php 
 return array (
-  'admin_user' => 
-  array (
-    'id' => 
-    array (
-      'field' => 'id',
-      'key' => 'PRI',
-      'default' => NULL,
-      'type' => 'int',
-      'lenght' => '11',
-      'unsigned' => true,
-      'null' => false,
-    ),
-    'name' => 
-    array (
-      'field' => 'name',
-      'key' => 'UNI',
-      'default' => '',
-      'type' => 'varchar',
-      'lenght' => '255',
-      'unsigned' => false,
-      'null' => true,
-    ),
-    'password' => 
-    array (
-      'field' => 'password',
-      'key' => '',
-      'default' => '',
-      'type' => 'varchar',
-      'lenght' => '255',
-      'unsigned' => false,
-      'null' => true,
-    ),
-    'display_name' => 
-    array (
-      'field' => 'display_name',
-      'key' => '',
-      'default' => NULL,
-      'type' => 'varchar',
-      'lenght' => '255',
-      'unsigned' => false,
-      'null' => true,
-    ),
-    'last_time' => 
-    array (
-      'field' => 'last_time',
-      'key' => '',
-      'default' => NULL,
-      'unsigned' => false,
-      'null' => true,
-    ),
-    'last_ip' => 
-    array (
-      'field' => 'last_ip',
-      'key' => '',
-      'default' => NULL,
-      'type' => 'int',
-      'lenght' => '11',
-      'unsigned' => false,
-      'null' => true,
-    ),
-    'is_del' => 
-    array (
-      'field' => 'is_del',
-      'key' => '',
-      'default' => NULL,
-      'type' => 'int',
-      'lenght' => '11',
-      'unsigned' => false,
-      'null' => true,
-    ),
-    'pk_name' => 'id',
-  ),
-  'apiurls' => 
+  'log' => 
   array (
     'id' => 
     array (
@@ -84,48 +12,38 @@ return array (
       'unsigned' => true,
       'null' => false,
     ),
-    'ver_id' => 
+    'subscribe_id' => 
     array (
-      'field' => 'ver_id',
-      'key' => '',
-      'default' => '0',
-      'lenght' => '5',
-      'unsigned' => true,
-      'null' => false,
-    ),
-    'category' => 
-    array (
-      'field' => 'category',
-      'key' => '',
-      'default' => '0',
-      'type' => 'tinyint',
-      'lenght' => '4',
-      'unsigned' => true,
-      'null' => false,
-    ),
-    'name_cn' => 
-    array (
-      'field' => 'name_cn',
+      'field' => 'subscribe_id',
       'key' => '',
       'default' => NULL,
-      'type' => 'varchar',
+      'type' => 'int',
+      'lenght' => '11',
+      'unsigned' => false,
+      'null' => false,
+    ),
+    'tag_id' => 
+    array (
+      'field' => 'tag_id',
+      'key' => '',
+      'default' => NULL,
       'lenght' => '50',
       'unsigned' => false,
       'null' => false,
     ),
-    'name' => 
+    'send_data' => 
     array (
-      'field' => 'name',
+      'field' => 'send_data',
       'key' => '',
       'default' => NULL,
       'type' => 'varchar',
-      'lenght' => '30',
+      'lenght' => '250',
       'unsigned' => false,
       'null' => false,
     ),
-    'description' => 
+    'response_data' => 
     array (
-      'field' => 'description',
+      'field' => 'response_data',
       'key' => '',
       'default' => '',
       'type' => 'varchar',
@@ -143,15 +61,201 @@ return array (
       'unsigned' => false,
       'null' => false,
     ),
+    'http_code' => 
+    array (
+      'field' => 'http_code',
+      'key' => '',
+      'default' => NULL,
+      'type' => 'int',
+      'lenght' => '11',
+      'unsigned' => false,
+      'null' => false,
+    ),
+    'retry' => 
+    array (
+      'field' => 'retry',
+      'key' => '',
+      'default' => '0',
+      'type' => 'tinyint',
+      'lenght' => '3',
+      'unsigned' => true,
+      'null' => false,
+    ),
+    'status' => 
+    array (
+      'field' => 'status',
+      'key' => '',
+      'default' => '1',
+      'type' => 'tinyint',
+      'lenght' => '3',
+      'unsigned' => true,
+      'null' => true,
+    ),
+    'create_time' => 
+    array (
+      'field' => 'create_time',
+      'key' => '',
+      'default' => NULL,
+      'unsigned' => false,
+      'null' => false,
+    ),
+    'update_time' => 
+    array (
+      'field' => 'update_time',
+      'key' => '',
+      'default' => NULL,
+      'unsigned' => false,
+      'null' => true,
+    ),
+    'pk_name' => 'id',
+  ),
+  'sqs_log' => 
+  array (
+    'id' => 
+    array (
+      'field' => 'id',
+      'key' => 'PRI',
+      'default' => NULL,
+      'type' => 'int',
+      'lenght' => '10',
+      'unsigned' => true,
+      'null' => false,
+    ),
+    'subscribe_id' => 
+    array (
+      'field' => 'subscribe_id',
+      'key' => '',
+      'default' => NULL,
+      'type' => 'int',
+      'lenght' => '11',
+      'unsigned' => false,
+      'null' => false,
+    ),
+    'tag' => 
+    array (
+      'field' => 'tag',
+      'key' => '',
+      'default' => NULL,
+      'type' => 'varchar',
+      'lenght' => '50',
+      'unsigned' => false,
+      'null' => false,
+    ),
+    'source' => 
+    array (
+      'field' => 'source',
+      'key' => '',
+      'default' => NULL,
+      'unsigned' => false,
+      'null' => true,
+    ),
+    'response' => 
+    array (
+      'field' => 'response',
+      'key' => '',
+      'default' => NULL,
+      'unsigned' => false,
+      'null' => true,
+    ),
+    'ip_address' => 
+    array (
+      'field' => 'ip_address',
+      'key' => '',
+      'default' => NULL,
+      'type' => 'varchar',
+      'lenght' => '100',
+      'unsigned' => false,
+      'null' => true,
+    ),
+    'http_code' => 
+    array (
+      'field' => 'http_code',
+      'key' => '',
+      'default' => NULL,
+      'type' => 'int',
+      'lenght' => '11',
+      'unsigned' => false,
+      'null' => true,
+    ),
     'status' => 
     array (
       'field' => 'status',
       'key' => '',
       'default' => '0',
       'type' => 'tinyint',
-      'lenght' => '4',
+      'lenght' => '3',
+      'unsigned' => true,
+      'null' => true,
+    ),
+    'update_time' => 
+    array (
+      'field' => 'update_time',
+      'key' => '',
+      'default' => NULL,
+      'unsigned' => false,
+      'null' => true,
+    ),
+    'create_time' => 
+    array (
+      'field' => 'create_time',
+      'key' => '',
+      'default' => 'CURRENT_TIMESTAMP',
+      'unsigned' => false,
+      'null' => true,
+    ),
+    'pk_name' => 'id',
+  ),
+  'sqs_subscribe' => 
+  array (
+    'id' => 
+    array (
+      'field' => 'id',
+      'key' => 'PRI',
+      'default' => NULL,
+      'type' => 'int',
+      'lenght' => '10',
+      'unsigned' => true,
+      'null' => false,
+    ),
+    'tag' => 
+    array (
+      'field' => 'tag',
+      'key' => '',
+      'default' => NULL,
+      'type' => 'varchar',
+      'lenght' => '255',
       'unsigned' => false,
       'null' => false,
+    ),
+    'address' => 
+    array (
+      'field' => 'address',
+      'key' => '',
+      'default' => NULL,
+      'type' => 'varchar',
+      'lenght' => '255',
+      'unsigned' => false,
+      'null' => false,
+    ),
+    'desc' => 
+    array (
+      'field' => 'desc',
+      'key' => '',
+      'default' => NULL,
+      'type' => 'varchar',
+      'lenght' => '255',
+      'unsigned' => false,
+      'null' => false,
+    ),
+    'status' => 
+    array (
+      'field' => 'status',
+      'key' => '',
+      'default' => '1',
+      'type' => 'tinyint',
+      'lenght' => '4',
+      'unsigned' => false,
+      'null' => true,
     ),
     'create_time' => 
     array (
@@ -165,13 +269,92 @@ return array (
     array (
       'field' => 'update_time',
       'key' => '',
+      'default' => '0000-00-00 00:00:00',
+      'unsigned' => false,
+      'null' => true,
+    ),
+    'pk_name' => 'id',
+  ),
+  'subscribe' => 
+  array (
+    'id' => 
+    array (
+      'field' => 'id',
+      'key' => 'PRI',
+      'default' => NULL,
+      'type' => 'int',
+      'lenght' => '10',
+      'unsigned' => true,
+      'null' => false,
+    ),
+    'tag_id' => 
+    array (
+      'field' => 'tag_id',
+      'key' => '',
+      'default' => NULL,
+      'lenght' => '5',
+      'unsigned' => true,
+      'null' => false,
+    ),
+    'url' => 
+    array (
+      'field' => 'url',
+      'key' => '',
+      'default' => NULL,
+      'type' => 'varchar',
+      'lenght' => '250',
+      'unsigned' => false,
+      'null' => false,
+    ),
+    'remark' => 
+    array (
+      'field' => 'remark',
+      'key' => '',
+      'default' => '',
+      'type' => 'varchar',
+      'lenght' => '250',
+      'unsigned' => false,
+      'null' => true,
+    ),
+    'order' => 
+    array (
+      'field' => 'order',
+      'key' => '',
+      'default' => '250',
+      'type' => 'tinyint',
+      'lenght' => '3',
+      'unsigned' => true,
+      'null' => true,
+    ),
+    'status' => 
+    array (
+      'field' => 'status',
+      'key' => '',
+      'default' => '1',
+      'type' => 'tinyint',
+      'lenght' => '4',
+      'unsigned' => false,
+      'null' => true,
+    ),
+    'create_time' => 
+    array (
+      'field' => 'create_time',
+      'key' => '',
+      'default' => NULL,
+      'unsigned' => false,
+      'null' => false,
+    ),
+    'update_time' => 
+    array (
+      'field' => 'update_time',
+      'key' => '',
       'default' => NULL,
       'unsigned' => false,
       'null' => true,
     ),
     'pk_name' => 'id',
   ),
-  'appinfo' => 
+  'tags' => 
   array (
     'id' => 
     array (
@@ -182,132 +365,29 @@ return array (
       'unsigned' => true,
       'null' => false,
     ),
+    'title' => 
+    array (
+      'field' => 'title',
+      'key' => '',
+      'default' => '',
+      'type' => 'varchar',
+      'lenght' => '50',
+      'unsigned' => false,
+      'null' => true,
+    ),
     'name' => 
     array (
       'field' => 'name',
       'key' => '',
       'default' => NULL,
       'type' => 'varchar',
-      'lenght' => '10',
+      'lenght' => '100',
       'unsigned' => false,
       'null' => false,
     ),
-    'description' => 
+    'suber_count' => 
     array (
-      'field' => 'description',
-      'key' => '',
-      'default' => NULL,
-      'type' => 'varchar',
-      'lenght' => '250',
-      'unsigned' => false,
-      'null' => false,
-    ),
-    'create_time' => 
-    array (
-      'field' => 'create_time',
-      'key' => '',
-      'default' => 'CURRENT_TIMESTAMP',
-      'unsigned' => false,
-      'null' => true,
-    ),
-    'update_time' => 
-    array (
-      'field' => 'update_time',
-      'key' => '',
-      'default' => '0000-00-00 00:00:00',
-      'unsigned' => false,
-      'null' => true,
-    ),
-    'pk_name' => 'id',
-  ),
-  'apppeacock' => 
-  array (
-    'id' => 
-    array (
-      'field' => 'id',
-      'key' => 'PRI',
-      'default' => NULL,
-      'type' => 'int',
-      'lenght' => '11',
-      'unsigned' => true,
-      'null' => false,
-    ),
-    'app_id' => 
-    array (
-      'field' => 'app_id',
-      'key' => '',
-      'default' => NULL,
-      'lenght' => '10',
-      'unsigned' => true,
-      'null' => false,
-    ),
-    'app_img' => 
-    array (
-      'field' => 'app_img',
-      'key' => '',
-      'default' => NULL,
-      'type' => 'varchar',
-      'lenght' => '255',
-      'unsigned' => false,
-      'null' => false,
-    ),
-    'start_time' => 
-    array (
-      'field' => 'start_time',
-      'key' => '',
-      'default' => '0',
-      'type' => 'int',
-      'lenght' => '11',
-      'unsigned' => false,
-      'null' => false,
-    ),
-    'end_time' => 
-    array (
-      'field' => 'end_time',
-      'key' => '',
-      'default' => '0',
-      'type' => 'int',
-      'lenght' => '11',
-      'unsigned' => false,
-      'null' => false,
-    ),
-    'app_sort' => 
-    array (
-      'field' => 'app_sort',
-      'key' => '',
-      'default' => '0',
-      'type' => 'tinyint',
-      'lenght' => '4',
-      'unsigned' => false,
-      'null' => false,
-    ),
-    'status' => 
-    array (
-      'field' => 'status',
-      'key' => '',
-      'default' => NULL,
-      'type' => 'tinyint',
-      'lenght' => '4',
-      'unsigned' => false,
-      'null' => false,
-    ),
-    'pk_name' => 'id',
-  ),
-  'appver' => 
-  array (
-    'id' => 
-    array (
-      'field' => 'id',
-      'key' => 'PRI',
-      'default' => NULL,
-      'type' => 'int',
-      'lenght' => '10',
-      'unsigned' => true,
-      'null' => false,
-    ),
-    'os' => 
-    array (
-      'field' => 'os',
+      'field' => 'suber_count',
       'key' => '',
       'default' => '0',
       'type' => 'tinyint',
@@ -315,48 +395,39 @@ return array (
       'unsigned' => true,
       'null' => false,
     ),
-    'app_id' => 
+    'send_ch' => 
     array (
-      'field' => 'app_id',
+      'field' => 'send_ch',
       'key' => '',
-      'default' => NULL,
-      'lenght' => '10',
+      'default' => '2',
+      'type' => 'tinyint',
+      'lenght' => '3',
       'unsigned' => true,
-      'null' => false,
+      'null' => true,
     ),
-    'ver_code' => 
+    'remark' => 
     array (
-      'field' => 'ver_code',
+      'field' => 'remark',
       'key' => '',
-      'default' => NULL,
+      'default' => '',
       'type' => 'varchar',
-      'lenght' => '10',
+      'lenght' => '250',
       'unsigned' => false,
-      'null' => false,
-    ),
-    'ver_name' => 
-    array (
-      'field' => 'ver_name',
-      'key' => '',
-      'default' => NULL,
-      'type' => 'varchar',
-      'lenght' => '25',
-      'unsigned' => false,
-      'null' => false,
+      'null' => true,
     ),
     'create_time' => 
     array (
       'field' => 'create_time',
       'key' => '',
-      'default' => 'CURRENT_TIMESTAMP',
+      'default' => NULL,
       'unsigned' => false,
-      'null' => true,
+      'null' => false,
     ),
     'update_time' => 
     array (
       'field' => 'update_time',
       'key' => '',
-      'default' => '0000-00-00 00:00:00',
+      'default' => NULL,
       'unsigned' => false,
       'null' => true,
     ),

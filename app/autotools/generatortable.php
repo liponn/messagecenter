@@ -1,7 +1,7 @@
 <?php
 $pathDir = pathinfo(dirname(__DIR__));
-define("__ROOT_PATH__", strtolower($pathDir['dirname']));
-define("__FRAMEWORK_ROOT_PATH__", __ROOT_PATH__  . DIRECTORY_SEPARATOR . 'system');
+define("__ROOT_PATH__", $pathDir['dirname']);
+define("__FRAMEWORK_ROOT_PATH__", '/var/www/html/wl_framework');
 define("__APP_ROOT_PATH__", __ROOT_PATH__ . DIRECTORY_SEPARATOR . 'app');
 
 define("__APP_MODEL_PATH__", __APP_ROOT_PATH__ . DIRECTORY_SEPARATOR . 'model');
