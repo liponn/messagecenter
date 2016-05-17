@@ -61,9 +61,9 @@ return array (
       'unsigned' => false,
       'null' => false,
     ),
-    'http_code' => 
+    'err_code' => 
     array (
-      'field' => 'http_code',
+      'field' => 'err_code',
       'key' => '',
       'default' => NULL,
       'type' => 'int',
@@ -378,7 +378,7 @@ return array (
     'name' => 
     array (
       'field' => 'name',
-      'key' => '',
+      'key' => 'UNI',
       'default' => NULL,
       'type' => 'varchar',
       'lenght' => '100',

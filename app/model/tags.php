@@ -59,7 +59,7 @@ PHPTPL;
         $row = $this->fields('id')->where(['name' => $tagName])->get()->row();
         if($row)
         {
-            $row->id;
+            return $row->id;
         }
         else
         {
