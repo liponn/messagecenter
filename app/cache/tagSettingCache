@@ -1,4 +1,5 @@
 <?php
 return array (
-  'register' => '3',
+  'register' => '1',
+  'auth' => '1',
 );

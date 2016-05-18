@@ -6,47 +6,49 @@
  */
 function index()
 {
-    $method = I('m','once');
-    if($method == 'once')
-    {
+    try {
+        $input = file_get_contents("php://input");
+        $post = json_decode($input, true);
+        $tag = I('data.tag/s', null, null, $post);
+        $dataSource = I('data.data/a', [], null, $post);
+        $tagsModel = new \Model\Tags();
+        $sendCh = $tagsModel->getSendCh($tag);
 
-    }
-    else
-    {
-
-    }
-}
-
-function putOne(){
-    $input = file_get_contents("php://input");
-    $post = json_decode($input, true);
-    $tag = I('data.tag/s', null, null, $post);
-    $data = I('data.data/a', [], null, $post);
-    if ($tag) {
-        //$tagsModel = new \Model\Tags();
-        //$sendCh = $tagsModel->getSendCh($tag);
-        $sendCh = mt_rand(1, 3);
-        if ($sendCh) {
-            $redis = getReidsInstance();
-            if (intval($sendCh) == \Model\Tags::SEND_CH_QUICK) {
-                $redis->lpush(QUEUE_QUICK, json_encode(['tag' => $tag, 'data' => $data]));
-            } elseif (intval($sendCh) == \Model\Tags::SEND_CH_NORMAL) {
-                $redis->lpush(QUEUE_NORMAL, json_encode(['tag' => $tag, 'data' => $data]));
-            } else {
-                $redis->lpush(QUEUE_SLOW, json_encode(['tag' => $tag, 'data' => $data]));
+        if($sendCh)
+        {
+            if(!isset($dataSource[0]))
+            {
+                $dataList = [ $dataSource];
             }
-            $redis->close();
+            else
+            {
+                $dataList = $dataSource;
+            }
+            putQueue($sendCh, $tag, $dataList);
             header('HTTP/1.1 200 OK');
             die;
-
         }
 
+    } catch (\Exception $e) {
+        logs(['err_code' => $e->getCode(),'err_msg' => $e->getMessage()]);
+        header('HTTP/1.1 404 Not Found');
+        die;
     }
-    header('HTTP/1.1 404 Not Found');
-    die;
+
 }
 
-
-function putMulti(){
+function putQueue($channel, $tag, $dataList)
+{
+    $redis = getReidsInstance();
+    foreach ($dataList as $data) {
+        if (intval($channel) == \Model\Tags::SEND_CH_QUICK) {
+            $redis->lpush(QUEUE_QUICK, json_encode(['tag' => $tag, 'data' => $data]));
+        } elseif (intval($channel) == \Model\Tags::SEND_CH_NORMAL) {
+            $redis->lpush(QUEUE_NORMAL, json_encode(['tag' => $tag, 'data' => $data]));
+        } else {
+            $redis->lpush(QUEUE_SLOW, json_encode(['tag' => $tag, 'data' => $data]));
+        }
+    }
+    $redis->close();
 
 }

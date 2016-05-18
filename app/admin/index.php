@@ -13,20 +13,6 @@ function lst(){
 
 /**
  * @pageroute
- */
-function mcQueue(){
-    $mcQueue = new \Lib\McQueue();
-    $putStatus = $mcQueue->put('register',['user_id' => 777 ,'realname'=> '刘奇','mobile'=>'18811176547','ip' => '127.0.0.1','datetime' => '2016.05.18 20:19:12']);
-    if(!$putStatus)
-    {
-        $error = $mcQueue->getErrMsg();//  ['err_code' => $mcQueue->errCode ,'err_msg' => $mcQueue->errMsg];
-        dump($error);
-    }
-
-}
-
-/**
- * @pageroute
  * 用户列表
  */
 function login(){
