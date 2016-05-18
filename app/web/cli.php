@@ -1,7 +1,6 @@
 <?php
 define("ENVIRONMENT","dev"); // "dev" "testing" "production"
 define("RUN_MODE","cli"); // 访问模式仅限cli模式
-define("SESSION_AUTO_START",false); // session_auto_start
 define('__WEBROOT__',__DIR__);
 define('__FRAMEWORK_PATH__','/home/liuqi/www/wl_framework');
 define("__APP_ROOT_PATH__", dirname(__WEBROOT__));

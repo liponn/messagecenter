@@ -6,38 +6,18 @@
  */
 function index()
 {
-    lpush();
+    $method = I('m','once');
+    if($method == 'once')
+    {
+
+    }
+    else
+    {
+
+    }
 }
 
-
-/**
- * @pageroute
- * 默认起始页
- */
-function notify()
-{
-    logs($_POST, 'post');
-    die;
-}
-
-/**
- * @pageroute
- * 测试
- */
-function test()
-{
-    $curl = new \Lib\Curl\Curl();
-    $input = json_encode(['tag' => 'register', 'data' => ["userId" => 11190, 'name' => 'PhperSid', 'mobile' => '18811176547']]);
-    $curl->post('http://liuqi.dev.wanglibao.com/messageCenter/app/web/services.php', $input);
-    dump($curl->httpStatusCode);
-}
-
-/**
- * @pageroute
- * 写队列
- */
-function lpush()
-{
+function putOne(){
     $input = file_get_contents("php://input");
     $post = json_decode($input, true);
     $tag = I('data.tag/s', null, null, $post);
@@ -64,4 +44,9 @@ function lpush()
     }
     header('HTTP/1.1 404 Not Found');
     die;
+}
+
+
+function putMulti(){
+
 }

@@ -30,6 +30,8 @@ return [
     'SWOOLE_DAEMONIZE' => false,
     'SWOOLE_WORKER_NUM' => 8,
 
+    'MCQUEUE_API_URL' => 'http://liuqi.dev.wanglibao.com/messageCenter/app/web/services.php',
+
     "PAGE_SIZE" => 20, //分页每页数量
 
 

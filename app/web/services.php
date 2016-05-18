@@ -1,5 +1,6 @@
 <?php
 define("ENVIRONMENT","dev"); // "dev" "testing" "production"
+define("SESSION_AUTO_START",false); // session not auto start
 define('__WEBROOT__',__DIR__);
 define('__FRAMEWORK_PATH__','/home/liuqi/www/wl_framework');
 define("__APP_ROOT_PATH__", dirname(__WEBROOT__));

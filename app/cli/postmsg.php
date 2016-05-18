@@ -1,4 +1,5 @@
 <?php defined("__FRAMEWORKNAME__") or die("No permission to access!");
+extension_loaded('swoole') OR die('Cannot load swoole extension!');
 /**
  * @pageroute
  * 启动
@@ -10,46 +11,68 @@ function run()
         $swoole->set([
             'daemonize' => C('SWOOLE_DAEMONIZE'),
             'worker_num' => C('SWOOLE_WORKER_NUM'),
+            'log_file' => __APP_LOGS_PATH__ . '/swoole.log'
         ]);
         $swoole->on('WorkerStart', 'onWorkerStart');
         $swoole->on('Receive', 'onReceive');
         $swoole->start();
     } catch (\Exception $e) {
-        echo $e->getMessage();
+        logs(['err_code' => $e->getCode(), 'err_msg' => $e->getMessage()], 'error');
     }
 }
 
+/**
+ * 连接redis
+ */
+function connectRedis()
+{
+    static $redisInstance;
+    if (!$redisInstance) {
+        $redisInstance = new redis();
+    }
+    try {
+        $redisInstance->ping();
+    } catch (\RedisException $e) {
+        while (!$redisInstance->pconnect(C('REDIS_HOST'), C('REDIS_PORT'))) {
+            logs('connect fail,retry in 5 sec', 'warning');
+            sleep(5);
+        }
+    }
+    return $redisInstance;
+}
 
 function onWorkerStart(swoole_server $swoole, $worker_id)
 {
     $chQuick = [0, 1, 2, 3];
     $chNormal = [4, 5];
     $chSlow = [6];
-    $redis = new redis();
-    $redis->pconnect(C('REDIS_HOST'), C('REDIS_PORT'));
+    $redis = connectRedis();
     for ($i = 0; $i <= 299; $i++) {
-        if (in_array($worker_id, $chQuick)) {
-            $queueData = $redis->brpop(QUEUE_QUICK, 5);
-        } elseif (in_array($worker_id, $chNormal)) {
-            $queueData = $redis->brpop(QUEUE_NORMAL, QUEUE_QUICK, 5);
-        } elseif (in_array($worker_id, $chSlow)) {
-            $queueData = $redis->brpop(QUEUE_SLOW, QUEUE_QUICK, QUEUE_NORMAL, 5);
-        } else {
-            $queueData = $redis->brpop(QUEUE_FAIL, QUEUE_QUICK, QUEUE_NORMAL, QUEUE_SLOW, 5);
-        }
-
-        if ($queueData) {
-            $queueName = $queueData[0];
-            $message = $queueData[1];
-            if ($worker_id == QUEUE_FAIL_WORKER_ID && $queueName == QUEUE_FAIL) {
-                call_user_func_array('retryPostMessage', [&$message, &$redis]);
+        try {
+            if (in_array($worker_id, $chQuick)) {
+                $queueData = $redis->brpop(QUEUE_QUICK, 5);
+            } elseif (in_array($worker_id, $chNormal)) {
+                $queueData = $redis->brpop(QUEUE_NORMAL, QUEUE_QUICK, 5);
+            } elseif (in_array($worker_id, $chSlow)) {
+                $queueData = $redis->brpop(QUEUE_SLOW, QUEUE_QUICK, QUEUE_NORMAL, 5);
             } else {
-                call_user_func_array('postMessage', [&$message, &$redis]);
+                $queueData = $redis->brpop(QUEUE_FAIL, QUEUE_QUICK, QUEUE_NORMAL, QUEUE_SLOW, 5);
+            }
+            if ($queueData) {
+                $queueName = $queueData[0];
+                $message = $queueData[1];
+                if ($worker_id == QUEUE_FAIL_WORKER_ID && $queueName == QUEUE_FAIL) {
+                    call_user_func_array('retryPostMessage', [&$message, &$redis]);
+                } else {
+                    call_user_func_array('postMessage', [&$message, &$redis]);
+
+                }
 
             }
 
+        } catch (\RedisException $e) {
+            $redis = connectRedis();
         }
-
 
     }
     $redis->close();
@@ -63,7 +86,6 @@ function postMessage(&$message, &$redis)
 {
 
     $messageArr = json_decode($message, true);
-    logs($messageArr);
     if (json_last_error()) {
         logs(['sourceData' => $message, 'error' => 'Parse json error.']);
     }
@@ -73,10 +95,8 @@ function postMessage(&$message, &$redis)
 
     $tagsModel = new \Model\Tags();
     $tagId = $tagsModel->getIdByName($tagName);
-    logs($tagsModel->getLastQuery());
     $subscribeModel = new \Model\Subscribe();
     $subscribeList = $subscribeModel->getByTagId($tagId);
-    logs($subscribeModel->getLastQuery());
     if ($subscribeList) {
         foreach ($subscribeList as $subscribe) {
             $curl = new \Lib\Curl\Curl();
