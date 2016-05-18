@@ -1,9 +1,6 @@
 #IDE
 .DS_Store
 .idea/
-cache/*
-logs/*
+cache/
+logs/
 system/
-vendor/
-app/web/*.php
-app/conf/config.php
