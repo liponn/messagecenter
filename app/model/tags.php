@@ -18,9 +18,9 @@ class Tags extends Model
         $this->checkSendSettingCache();
     }
 
-    private function checkSendSettingCache(){
+    public function checkSendSettingCache($forceReload = false){
         self::$settingCache =  __APP_CACHE_PATH__ . DIRECTORY_SEPARATOR . 'tagSettingCache';
-        if( (!file_exists(self::$settingCache))  ||  (time() - 1 * 8 >= filemtime(self::$settingCache)))
+        if( (!file_exists(self::$settingCache))  || ($forceReload) || (time() - 3600 * 8 >= filemtime(self::$settingCache)))
         {
             //配置缓存不存在，或者上次修改时间离现在时间大于等于八个小时,则重建缓存
             $tags = $this->fields(['name','send_ch'])->get()->result();
