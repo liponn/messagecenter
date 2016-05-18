@@ -27,7 +27,7 @@ return [
 
     'SWOOLE_IP' => '127.0.0.1',
     'SWOOLE_PORT' => 6767,
-    'SWOOLE_DAEMONIZE' => false,
+    'SWOOLE_DAEMONIZE' => true,
     'SWOOLE_WORKER_NUM' => 8,
 
     'MCQUEUE_API_URL' => 'http://liuqi.dev.wanglibao.com/messageCenter/app/web/services.php',
