@@ -1,0 +1,61 @@
+{include file="header.html"}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <div class="top-title">
+        <h2 class="sub-header">订阅信息&nbsp;&nbsp;<small>共{$total}条数据</small></h2>
+        <div class="top-tools">
+            <a href="?c=subscribe&a=add"class="btn btn-primary">增加订阅</a>
+        </div>
+    </div>
+    <div style="clear:both"></div>
+    <ul id="myTab" class="nav nav-tabs">
+        <li active="form01"class="active"><a href="?c=subscribe&a=lst">
+            订阅列表</a>
+        </li>
+    </ul>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="row-selected row-selected"><input class="check-all" type="checkbox"></th>
+                <th>id</th>
+                <th>标签id</th>
+                <th >通知地址</th>
+                <th >备注说明</th>
+                <th >排序</th>
+                <th >状态</th>
+                <th >创建时间 </th>
+                <th >更新时间 </th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $lists as $item}
+            <tr>
+                <td><input class="ids" type="checkbox" name="id[]"></td>
+                <td>{$item.id}</td>
+                <td>{$item.tag_id}</td>
+                <td><span titile="{$item.url}">{substr($item.url,0,38)}</span></td>
+                <td>{if empty($item.remark)}暂无{else}{$item.remark}{/if}</td>
+                <td>{$item.order}</td>
+                <td>
+                    {if $item.status == 1}
+                    <span class="adminstatus adminonline">启用</span>
+                    {elseif $item.status==0}
+                    <span class="adminstatus adminoffline">禁用</span>
+                    {else}
+                    <span class="adminstatus adminoffline">删除</span>
+                    {/if}
+                </td>
+                <td>{$item.create_time}</td>
+                <td>{$item.update_time}</td>
+                <td>
+                   <a href="?c=subscribe&a=edit&id={$item.id}" class="btn btn-primary btn-xs szpq">编辑</a> |
+                   <a href="?c=subscribe&a=del&id={$item.id}" class="btn btn-danger btn-xs status">删除</a>
+                </td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+        <div>{$pagination_link}</div>
+    </div>
+    {include file="footer.html"}

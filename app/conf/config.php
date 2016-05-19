@@ -3,7 +3,8 @@ return [
     "DEFAULT_CONTROLLER" => 'index', //默认控制器
     "DEFAULT_ACTION" => 'index', //默认方法
 
-    "BASE_HOST" => 'http://liuqi.dev.wanglibao.com/messageCenter/app/web', //域名
+    //"BASE_HOST" => 'http://liuqi.dev.wanglibao.com/messageCenter/app/web', //域名
+    "BASE_HOST" => 'http://sunfeng.wlmessage.dev.wanglibao.com', //域名
 
     "URL_CONTROL_NAME" => 'c', // 默认控制器参数名
     "URL_ACTION_NAME" => 'a', // 默认动作参数名
@@ -22,7 +23,7 @@ return [
     "DB_NAME" => 'ms',//数据库名
     "DB_PREFIX" => '',//表前缀
     "DB_PCONNECT" => false, //长连接
-    "DB_DEBUG" => false, //调试模式
+    "DB_DEBUG" => true, //调试模式
     "DB_CHARSET" => 'utf8', //编码
 
     'SWOOLE_IP' => '127.0.0.1',

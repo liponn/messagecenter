@@ -1,0 +1,67 @@
+{include file="header.html"}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <div class="top-title">
+        <h2 class="sub-header">日志&nbsp;&nbsp;<small>共{$total}条数据</small></h2>
+        <div class="top-tools">
+           <!-- <a href="?c=subscribe&a=add"class="btn btn-primary">增加日志</a>-->
+        </div>
+    </div>
+    <div style="clear:both"></div>
+    <ul id="myTab" class="nav nav-tabs">
+        <li active="form01"class="active"><a href="?c=log&a=lst&type=1">
+            日志成功列表</a>
+        </li>
+        <li active="form02"class="active"><a href="?c=log&a=lst&type=2">
+            日志重试列表</a>
+        </li>
+        <li active="form03"class="active"><a href="?c=log&a=lst&type=3">
+            日志失败列表</a>
+        </li>
+    </ul>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+               <!-- <th class="row-selected row-selected"><input class="check-all" type="checkbox"></th>
+                -->
+                <th>id</th>
+                <th>标签</th>
+                <th >请求数据</th>
+                <th >响应数据</th>
+                <th >ip地址</th>
+                <th >错误号</th>
+                <th >状态 </th>
+                <th >创建时间 </th>
+                <th >更新时间 </th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $lists as $item}
+            <tr>
+                <!--<td><input class="ids" type="checkbox" name="id[]"></td>-->
+                <td>{$item.id}</td>
+                <td>{$item.tag_name}</td>
+                <td><span>{substr($item.send_data,0,15)}</span></td>
+                <td><span>{substr($item.response_data,0,15)}</span></td>
+                <td><span>{substr($item.url,0,15)}</span></td>
+                <td>{$item.err_code}</td>
+                <td>
+                    {if $item.status == 1}
+                    <span class="adminstatus adminonline">成功</span>
+                    {else}
+                        {if $item.retry >0 && $item.retry < 3}
+                            <span class="adminstatus adminoffline">重试中</span>
+                        {else}
+                            <span class="adminstatus adminoffline">失败</span>
+                        {/if}
+                    {/if}
+                </td>
+                <td>{$item.create_time}</td>
+                <td>{$item.update_time}</td>
+            </tr>
+            {/foreach}
+            </tbody>
+        </table>
+        <div>{$pagination_link}</div>
+    </div>
+    {include file="footer.html"}

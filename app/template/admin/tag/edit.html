@@ -1,0 +1,52 @@
+{include file="header.html"}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+  <form class="form-horizontal" id="form01" action="?c=tag&a=edit" method="post" enctype="multipart/form-data">
+    <input name="id" value="{$list['id']}" type="hidden" />
+    <div class="top-title">
+      <h2 class="sub-header">标签信息</h2>
+      <div class="top-tools">
+        <button type="submit" class="btn btn-primary">保存</button>
+        <a class="btn btn-default" href="?c=tag&a=lst">返回</a>
+      </div>
+    </div>
+    <div style="clear:both"></div>
+      <div class="form-group">
+          <label class="col-sm-2 control-label"><span class="name_span">标题</span><i>*</i></label>
+          <div class="col-sm-7">
+              <input type="text" class="form-control name" placeholder="标题" name="title" value="{$list['title']}">
+          </div>
+      </div>
+      <div class="form-group">
+          <label class="col-sm-2 control-label"><span class="name_span">名称</span><i>*</i></label>
+          <div class="col-sm-7">
+              <input type="text" class="form-control name" placeholder="名称" name="name" value="{$list['name']}">
+          </div>
+      </div>
+      <div class="form-group">
+          <label class="col-sm-2 control-label"><span class="name_span">订阅数</span><i>*</i></label>
+          <div class="col-sm-7">
+              <input type="text" class="form-control name" placeholder="订阅数" name="suber_count" value="{$list['suber_count']}">
+          </div>
+      </div>
+      <div class="form-group">
+          <label class="col-sm-2 control-label"><span class="name_span">备注</span><i>*</i></label>
+          <div class="col-sm-7">
+              <input type="text" class="form-control name" placeholder="备注" name="remark" value="{$list['remark']}">
+          </div>
+      </div>
+      <div class="form-group">
+          <label class="col-sm-2 control-label"><span class="name_span">状态</span><i>*</i></label>
+          <div class="col-sm-3">
+              <select class="form-control" name="send_ch">
+                  <option {if $list['send_ch']==1}selected{/if} value="1">快速</option>
+                  <option {if $list['send_ch']==2}selected{/if} value="2">正常</option>
+                  <option {if $list['send_ch']==3}selected{/if} value="3">缓慢</option>
+              </select>
+          </div>
+      </div>
+  <hr/>
+  <div class="table-responsive">
+  </div>
+</form>
+</div>
+{include file="footer.html"}
