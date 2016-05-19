@@ -1,0 +1,34 @@
+    <nav class="navbar navbar-inverse navbar-fixed-top navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="?c=useraccount&a=index">订阅信息后台</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+
+            <li><a href="javascript:;">管理员：{$CURRENT_USER} </a></li>
+            <li><a href="?c=index&a=loginout">退出</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active">
+              <a>订阅管理</a>
+            </li>
+            <li><a href="?c=tag&a=lst">标签表</a></li>
+            <li><a href="?c=subscribe&a=lst">订阅列表</a></li>
+            <li><a href="?c=log&a=lst">日志列表</a></li>
+          </ul>
+        </div>
+

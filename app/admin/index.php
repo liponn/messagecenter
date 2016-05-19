@@ -23,7 +23,7 @@ function login(){
         $randKey = date('d');
         if(($name == "admin") && ($password == ("mc" .$randKey)))
         {
-            $_SESSION['user']['isadmin'] = true;
+            $_SESSION['user']['name'] = $name;
             redirect(U('admin.php',['c' => 'subscribe' , 'a' => 'lst']));
         }
         else
@@ -34,4 +34,13 @@ function login(){
         $framework->smarty->display('index/login.html');
     }
 
+}
+
+/**
+ * @pageroute
+ */
+function loginout()
+{
+    $_SESSION = array();
+    redirect("?c=index&a=login");
 }

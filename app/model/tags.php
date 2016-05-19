@@ -67,4 +67,20 @@ PHPTPL;
         }
 
     }
+    public function getList($page='1'){
+        //总数目
+        $userNum = $this->countNums();
+        //分页配置
+        $config = array(
+            'total' => $userNum,
+            'pagesize' => C('PAGE_SIZE'),
+            'current_page' => $page,
+        );
+        $pagination = new \Lib\Pagination($config);
+        $results = $this->listTable('', $pagination->start, $pagination->offset, "id desc")->resultArr();
+        $page_num = $pagination->createLink();
+        $data = array('num'=>$userNum,'info'=>$results,'page_num'=>$page_num);
+        return $data;
+    }
+
 }
