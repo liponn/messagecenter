@@ -1,7 +1,7 @@
-<?php /* Smarty version 3.1.27, created on 2016-05-16 19:03:40
+<?php /* Smarty version 3.1.27, created on 2016-05-19 11:17:07
          compiled from "/home/liuqi/www/messageCenter/app/template/admin/index/login.html" */ ?>
 <?php
-/*%%SmartyHeaderCode:7270950765739a90cda98c8_77350680%%*/
+/*%%SmartyHeaderCode:434806598573d3033c73fd1_74065488%%*/
 if(!defined('SMARTY_DIR')) exit('no direct access allowed');
 $_valid = $_smarty_tpl->decodeProperties(array (
   'file_dependency' => 
@@ -9,20 +9,20 @@ $_valid = $_smarty_tpl->decodeProperties(array (
     '031b094d6312441faf803665b2ab45579b8ff093' => 
     array (
       0 => '/home/liuqi/www/messageCenter/app/template/admin/index/login.html',
-      1 => 1463396618,
+      1 => 1463625980,
       2 => 'file',
     ),
   ),
-  'nocache_hash' => '7270950765739a90cda98c8_77350680',
+  'nocache_hash' => '434806598573d3033c73fd1_74065488',
   'has_nocache_code' => false,
   'version' => '3.1.27',
-  'unifunc' => 'content_5739a90cdb1f41_83437080',
+  'unifunc' => 'content_573d3033c7c865_94782288',
 ),false);
 /*/%%SmartyHeaderCode%%*/
-if ($_valid && !is_callable('content_5739a90cdb1f41_83437080')) {
-function content_5739a90cdb1f41_83437080 ($_smarty_tpl) {
+if ($_valid && !is_callable('content_573d3033c7c865_94782288')) {
+function content_573d3033c7c865_94782288 ($_smarty_tpl) {
 
-$_smarty_tpl->properties['nocache_hash'] = '7270950765739a90cda98c8_77350680';
+$_smarty_tpl->properties['nocache_hash'] = '434806598573d3033c73fd1_74065488';
 ?>
 <!DOCTYPE html>
 <html lang="zh-CN">

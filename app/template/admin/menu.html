@@ -23,12 +23,9 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active">
-              <a>订阅管理</a>
-            </li>
-            <li><a href="?c=tag&a=lst">标签表</a></li>
-            <li><a href="?c=subscribe&a=lst">订阅列表</a></li>
-            <li><a href="?c=log&a=lst">日志列表</a></li>
+            <li class="{if $smarty.get.c eq 'tag'}active{/if}"><a href="?c=tag&a=lst">标签表</a></li>
+            <li class="{if $smarty.get.c eq 'subscribe'}active{/if}"><a href="?c=subscribe&a=lst">订阅列表</a></li>
+            <li class="{if $smarty.get.c eq 'log'}active{/if}"><a href="?c=log&a=lst">日志列表</a></li>
           </ul>
         </div>
 

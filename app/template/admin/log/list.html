@@ -8,13 +8,13 @@
     </div>
     <div style="clear:both"></div>
     <ul id="myTab" class="nav nav-tabs">
-        <li active="form01"class="active"><a href="?c=log&a=lst&type=1">
+        <li active="form01"class="{if $smarty.get.type eq '1' or $smarty.get.type eq ''}active{/if}"><a href="?c=log&a=lst&type=1">
             日志成功列表</a>
         </li>
-        <li active="form02"class="active"><a href="?c=log&a=lst&type=2">
+        <li active="form02"class="{if $smarty.get.type eq '2'}active{/if}"><a href="?c=log&a=lst&type=2">
             日志重试列表</a>
         </li>
-        <li active="form03"class="active"><a href="?c=log&a=lst&type=3">
+        <li active="form03"class="{if $smarty.get.type eq '3'}active{/if}"><a href="?c=log&a=lst&type=3">
             日志失败列表</a>
         </li>
     </ul>
@@ -31,8 +31,7 @@
                 <th >ip地址</th>
                 <th >错误号</th>
                 <th >状态 </th>
-                <th >创建时间 </th>
-                <th >更新时间 </th>
+                <th >处理时间 </th>
             </tr>
             </thead>
             <tbody>
@@ -56,8 +55,7 @@
                         {/if}
                     {/if}
                 </td>
-                <td>{$item.create_time}</td>
-                <td>{$item.update_time}</td>
+                <td>{if $item.update_time}{$item.update_time}{else}{$item.create_time}{/if}</td>
             </tr>
             {/foreach}
             </tbody>
