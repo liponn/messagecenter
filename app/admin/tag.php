@@ -41,6 +41,7 @@ function add()
         );
         $SubscribeModel = new \Model\Tags();
         $status = $SubscribeModel->add($data);
+        $SubscribeModel->checkSendSettingCache(true);
         urlJump($status,U('admin.php', ['c' => 'tag', 'a' => 'lst']),'add');
     }else
     {
