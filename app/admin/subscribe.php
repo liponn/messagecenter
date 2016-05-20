@@ -41,9 +41,12 @@ function add()
         );
         $SubscribeModel = new \Model\Subscribe();
         $status = $SubscribeModel->add($data);
-        urlJump($status,U('admin.php', ['c' => 'tag', 'a' => 'lst']),'add');
+        urlJump($status,U('admin.php', ['c' => 'subscribe', 'a' => 'lst']),'add');
     }else
     {
+        $tagModel = new \Model\Tags();
+        $result = $tagModel->get()->resultArr();
+        $framework->smarty->assign('list',$result);
         $framework->smarty->display('subscribe/add.html');
     }
 }
@@ -67,10 +70,13 @@ function edit()
         );
         $where = array('id'=>$info['id']);
         $status = $SubscribeModel->update($data,$where);
-        urlJump($status,U('admin.php', ['c' => 'tag', 'a' => 'lst']),'edit');
+        urlJump($status,U('admin.php', ['c' => 'subscribe', 'a' => 'lst']),'edit');
     }else
     {
         $id = I('get.id');
+        $tagModel = new \Model\Tags();
+        $result = $tagModel->get()->resultArr();
+        $framework->smarty->assign('taglist',$result);
         $result = $SubscribeModel->where(array('id'=>$id))->get()->rowArr();
         $framework->smarty->assign('list',$result);
         $framework->smarty->display('subscribe/edit.html');
@@ -85,5 +91,5 @@ function del()
     $where = array('id'=>$id);
     $SubscribeModel = new \Model\Subscribe();
     $status = $SubscribeModel->del($where);
-    urlJump($status,U('admin.php', ['c' => 'tag', 'a' => 'lst']),'del');
+    urlJump($status,U('admin.php', ['c' => 'subscribe', 'a' => 'lst']),'del');
 }
