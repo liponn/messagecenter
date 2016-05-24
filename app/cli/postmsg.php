@@ -47,7 +47,7 @@ function onWorkerStart(swoole_server $swoole, $worker_id)
     $chNormal = [4, 5];
     $chSlow = [6];
     $redis = connectRedis();
-    for ($i = 0; $i <= 299; $i++) {
+    for ($i = 1; $i <= 3000; $i++) {
         try {
             if (in_array($worker_id, $chQuick)) {
                 $queueData = $redis->brpop(QUEUE_QUICK, 5);
