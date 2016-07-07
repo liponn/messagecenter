@@ -22,10 +22,15 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
+          {foreach from=$rbacList item=item}
           <ul class="nav nav-sidebar">
-            <li class="{if $smarty.get.c eq 'tag'}active{/if}"><a href="?c=tag&a=lst">标签表</a></li>
-            <li class="{if $smarty.get.c eq 'subscribe'}active{/if}"><a href="?c=subscribe&a=lst">订阅列表</a></li>
-            <li class="{if $smarty.get.c eq 'log'}active{/if}"><a href="?c=log&a=lst">日志列表</a></li>
+            <li class="active">
+              <a>{$item.remark}</a>
+            </li>
+            {foreach from=$item.child item=controls}
+            <li ><a href="{$controls.base_url}">{$controls.remark}</a></li>
+            {/foreach}
           </ul>
+          {/foreach}
         </div>
 

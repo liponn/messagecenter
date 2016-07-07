@@ -11,9 +11,6 @@
         <li active="form01"class="{if $smarty.get.type eq '1' or $smarty.get.type eq ''}active{/if}"><a href="?c=log&a=lst&type=1">
             日志成功列表</a>
         </li>
-        <li active="form02"class="{if $smarty.get.type eq '2'}active{/if}"><a href="?c=log&a=lst&type=2">
-            日志重试列表</a>
-        </li>
         <li active="form03"class="{if $smarty.get.type eq '3'}active{/if}"><a href="?c=log&a=lst&type=3">
             日志失败列表</a>
         </li>
@@ -32,6 +29,7 @@
                 <th >错误号</th>
                 <th >状态 </th>
                 <th >处理时间 </th>
+                <th >操作 </th>
             </tr>
             </thead>
             <tbody>
@@ -48,14 +46,11 @@
                     {if $item.status == 1}
                     <span class="adminstatus adminonline">成功</span>
                     {else}
-                        {if $item.retry >0 && $item.retry < 3}
-                            <span class="adminstatus adminoffline">重试中</span>
-                        {else}
-                            <span class="adminstatus adminoffline">失败</span>
-                        {/if}
+                    <span class="adminstatus adminoffline">失败</span>
                     {/if}
                 </td>
                 <td>{if $item.update_time}{$item.update_time}{else}{$item.create_time}{/if}</td>
+                <td class="retry_send">{if $item.status == 0}<button class="btn btn-primary retry pull-right" type="button">重试</button>{/if}</td>
             </tr>
             {/foreach}
             </tbody>
@@ -63,3 +58,29 @@
         <div>{$pagination_link}</div>
     </div>
     {include file="footer.html"}
+    <script>
+        $(".retry_send").click(function(){
+           if($('.retry_send > button').length==0)
+            {
+                return false;
+            }else
+            {
+               var id = $(this).parent().find('td:first').html();
+                $.post("?c=log&a=retry",{
+                    'id':id,
+                },function( response ){
+                    console.log(response);
+                    if(response.error==100) {
+                        throwExc(response.msg);
+                        return false;
+                    }else if(response.error==200) {
+                        showSucc(response.msg);
+                        setTimeout("load()",1000);
+                    }
+                },"json");
+            };
+        })
+        function load(){
+            window.location.href="?c=log&a=lst&type=3&p="+getUrlParam('p');
+        }
+    </script>
