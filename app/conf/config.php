@@ -5,7 +5,7 @@ return [
 
     "BASE_HOST" => 'http://liuqi.dev.wanglibao.com/messageCenter/app/web', //域名
     //"BASE_HOST" => 'http://sunfeng.wlmessage.dev.wanglibao.com', //域名
-
+    "SERVER_PASSPORT" => 'http://sunfeng.wlpassport.dev.wanglibao.com',
     "URL_CONTROL_NAME" => 'c', // 默认控制器参数名
     "URL_ACTION_NAME" => 'a', // 默认动作参数名
     "URL_MODE" => 0, // 0 GET  1 PATHINFO
@@ -35,5 +35,5 @@ return [
 
     "PAGE_SIZE" => 20, //分页每页数量
 
-
+    "DISABLE_SESSION_ROUTE" => '*',//禁用session
 ];
