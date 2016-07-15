@@ -46,7 +46,7 @@
         }
         else
         {
-            redirect('http://sunfeng.wlpassport.dev.wanglibao.com/admin.php?c=login&a=index');
+            redirect(C('RBAC_ADMIN_URL').'/admin.php'.'?c=login&a=index');
         }
 
     }
