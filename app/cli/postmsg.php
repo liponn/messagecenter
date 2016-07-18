@@ -33,8 +33,14 @@ function connectRedis()
     try {
         $redisInstance->ping();
     } catch (\RedisException $e) {
-        while (!$redisInstance->pconnect(C('REDIS_HOST'), C('REDIS_PORT'))) {
-            logs('connect fail,retry in 5 sec', 'warning');
+        $status = false;$i= 0;
+        while (!$status) {
+            $status = $redisInstance->pconnect(C('REDIS_HOST'), C('REDIS_PORT'),C("REDIS_TIMEOUT"));
+            if(C('REDIS_PWD'))
+                $status = $redisInstance->auth(C('REDIS_PWD'));
+            if(0 !== $i )
+                logs('connect fail,retry in 5 sec', 'warning');
+            ++$i;
             sleep(5);
         }
     }
