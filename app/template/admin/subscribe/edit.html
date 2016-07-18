@@ -11,9 +11,13 @@
     </div>
     <div style="clear:both"></div>
       <div class="form-group">
-        <label class="col-sm-2 control-label"><span class="name_span">标签id</span><i>*</i></label>
+        <label class="col-sm-2 control-label"><span class="name_span">标签</span><i>*</i></label>
         <div class="col-sm-7">
-          <input type="text" class="form-control name" placeholder="标签id" name="tag_id" value="{$list['tag_id']}">
+            <select name="tag_id">
+                {foreach $taglist as $tag}
+                <option {if $tag['id'] == $list['tag_id']}selected{/if} value="{$tag['id']}">{$tag['title']}</option>
+                {/foreach}
+            </select>
         </div>
       </div>
       <div class="form-group">
