@@ -50,7 +50,7 @@
                 <td>{$item.update_time}</td>
                 <td>
                    <a href="?c=subscribe&a=edit&id={$item.id}" class="btn btn-primary btn-xs szpq">编辑</a> |
-                   <a href="?c=subscribe&a=del&id={$item.id}" class="btn btn-danger btn-xs status">删除</a>
+                   <a href="?c=subscribe&a=del&id={$item.id}&tag_id={$item.tag_id}" class="btn btn-danger btn-xs status">删除</a>
                 </td>
             </tr>
             {/foreach}

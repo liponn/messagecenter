@@ -3,8 +3,9 @@ return [
     "DEFAULT_CONTROLLER" => 'index', //默认控制器
     "DEFAULT_ACTION" => 'index', //默认方法
 
-    "BASE_HOST" => 'http://liuqi.dev.wanglibao.com/messageCenter/app/web', //域名
-    "SERVER_PASSPORT" => 'http://php1.wanglibao.com',//用户模块的域名
+    "BASE_HOST" => 'http://sunfeng.wlmessage.dev.wanglibao.com', //域名
+    //"SERVER_PASSPORT" => 'http://php1.wanglibao.com',//用户模块的域名--当前为测试环境的地址
+    "SERVER_PASSPORT" => 'http://sunfeng.wlpassport.dev.wanglibao.com',//用户模块的域名--当前为测试环境的地址
     "URL_CONTROL_NAME" => 'c', // 默认控制器参数名
     "URL_ACTION_NAME" => 'a', // 默认动作参数名
     "URL_MODE" => 0, // 0 GET  1 PATHINFO
@@ -33,6 +34,6 @@ return [
     'MCQUEUE_API_URL' => 'http://liuqi.dev.wanglibao.com/messageCenter/app/web/services.php',
 
     "PAGE_SIZE" => 20, //分页每页数量
-    "RBAC_ADMIN_URL"=>'http://php1.wanglibao.com/admin.php',
+    "RBAC_ADMIN_URL"=>'http://php1.wanglibao.com',
     "DISABLE_SESSION_ROUTE" => '*',//禁用session
 ];

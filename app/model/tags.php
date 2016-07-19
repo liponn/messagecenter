@@ -82,5 +82,22 @@ PHPTPL;
         $data = array('num'=>$userNum,'info'=>$results,'page_num'=>$page_num);
         return $data;
     }
+    //添加/减少订阅数
+    public function getEditCountById($id,$type)
+    {
+        $tags = $this->where(array('id'=>$id))->get()->rowArr();
+        if($tags)
+        {
+            $this->initArData($tags['id']);
+            if($type=='1')
+            {
+                $this->suber_count = ++$tags['suber_count'];
+            }else
+            {
+                $this->suber_count = --$tags['suber_count'];
+            }
+            return $this->save();
+        }
+    }
 
 }

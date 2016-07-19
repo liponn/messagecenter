@@ -13,6 +13,7 @@ function lst()
 {
     $framework = getFrameworkInstance();
     $SubscribeModel = new \Model\Tags();
+    $SubscribeModel->checkSendSettingCache(true);
     $page = I('get.p/d', 1);
     $data = $SubscribeModel->getList($page);
     $userNum = $data['num'];
@@ -34,7 +35,6 @@ function add()
         $data = array(
             'title' => $info['title'],
             'name' => $info['name'],
-            'suber_count' => $info['suber_count'],
             'send_ch' => $info['send_ch'],
             'remark' => $info['remark'],
             'create_time' => date('Y-m-d H:i:s', time()),
@@ -61,12 +61,12 @@ function edit()
         $data = array(
             'title' => $info['title'],
             'name' => $info['name'],
-            'suber_count' => $info['suber_count'],
             'send_ch' => $info['send_ch'],
             'remark' => $info['remark'],
             'update_time' => date('Y-m-d H:i:s', time()),
         );
         $where = array('id'=>$info['id']);
+        $SubscribeModel->checkSendSettingCache(true);
         $status = $SubscribeModel->update($data,$where);
         urlJump($status,U('admin.php', ['c' => 'tag', 'a' => 'lst']),'edit');
     }else
@@ -85,6 +85,6 @@ function del()
     $id = I('get.id');
     $where = array('id'=>$id);
     $SubscribeModel = new \Model\Tags();
-    $status = $SubscribeModel->del($where);
+    $status = $SubscribeModel->delete($where);
     urlJump($status,U('admin.php', ['c' => 'tag', 'a' => 'lst']),'del');
 }

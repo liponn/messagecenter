@@ -40,6 +40,9 @@ function add()
             'create_time' => date('Y-m-d H:i:s', time()),
         );
         $SubscribeModel = new \Model\Subscribe();
+        //标签表中订阅数加1
+        $tagModel  = new \Model\Tags();
+        $tag = $tagModel->getEditCountById($data['tag_id'],1);
         $status = $SubscribeModel->add($data);
         urlJump($status,U('admin.php', ['c' => 'subscribe', 'a' => 'lst']),'add');
     }else
@@ -88,8 +91,11 @@ function edit()
 function del()
 {
     $id = I('get.id');
+    $tag_id = I('get.tag_id');
     $where = array('id'=>$id);
+    $tagModel = new \Model\Tags();
+    $tag = $tagModel->getEditCountById($tag_id,2);
     $SubscribeModel = new \Model\Subscribe();
-    $status = $SubscribeModel->del($where);
+    $status = $SubscribeModel->delete($where);
     urlJump($status,U('admin.php', ['c' => 'subscribe', 'a' => 'lst']),'del');
 }
