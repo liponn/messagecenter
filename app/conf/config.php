@@ -13,7 +13,7 @@ return [
     "REDIS_HOST" => "127.0.0.1", //redis主机地址
     "REDIS_PORT" => 6379, //redis端口
     "REDIS_PWD" => "", //redis密码
-    "REDIS_TIMEOUT" => 0, //redis超时时间
+    "REDIS_TIMEOUT" => 3, //redis超时时间
 
     "DB_TYPE" => 'pdo', //连接驱动
     "DB_HOST" => '127.0.0.1', //主机地址
