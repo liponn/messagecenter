@@ -33,12 +33,13 @@ function connectRedis()
     try {
         $redisInstance->ping();
     } catch (\RedisException $e) {
-        $status = false;$i= 0;
+        $status = false;
+        $i = 0;
         while (!$status) {
-            $status = $redisInstance->pconnect(C('REDIS_HOST'), C('REDIS_PORT'),C("REDIS_TIMEOUT"));
-            if(C('REDIS_PWD'))
+            $status = $redisInstance->pconnect(C('REDIS_HOST'), C('REDIS_PORT'), C("REDIS_TIMEOUT"));
+            if (C('REDIS_PWD'))
                 $status = $redisInstance->auth(C('REDIS_PWD'));
-            if(0 !== $i )
+            if (0 !== $i)
                 logs('connect fail,retry in 5 sec', 'warning');
             ++$i;
             sleep(5);
@@ -52,32 +53,58 @@ function onWorkerStart(swoole_server $swoole, $worker_id)
     $chQuick = [0, 1, 2, 3];
     $chNormal = [4, 5];
     $chSlow = [6];
-    $redis = connectRedis();
+
     for ($i = 1; $i <= 3000; $i++) {
-        try {
-            if (in_array($worker_id, $chQuick)) {
+
+        $redis = connectRedis();//断线重连redis
+        $queueData = $keys = [];
+        if (in_array($worker_id, $chQuick)) {
+            if ($redis->llen(QUEUE_QUICK))
+                $keys[] = QUEUE_QUICK;
+            if ($keys)
                 $queueData = $redis->brpop(QUEUE_QUICK, 5);
-            } elseif (in_array($worker_id, $chNormal)) {
+        } elseif (in_array($worker_id, $chNormal)) {
+            if ($redis->llen(QUEUE_NORMAL))
+                $keys[] = QUEUE_NORMAL;
+            if ($redis->llen(QUEUE_QUICK))
+                $keys[] = QUEUE_QUICK;
+            if ($keys)
                 $queueData = $redis->brpop(QUEUE_NORMAL, QUEUE_QUICK, 5);
-            } elseif (in_array($worker_id, $chSlow)) {
+        } elseif (in_array($worker_id, $chSlow)) {
+            if ($redis->llen(QUEUE_SLOW))
+                $keys[] = QUEUE_SLOW;
+            if ($redis->llen(QUEUE_NORMAL))
+                $keys[] = QUEUE_NORMAL;
+            if ($redis->llen(QUEUE_QUICK))
+                $keys[] = QUEUE_QUICK;
+            if ($keys)
                 $queueData = $redis->brpop(QUEUE_SLOW, QUEUE_QUICK, QUEUE_NORMAL, 5);
-            } else {
+        } else {
+            if ($redis->llen(QUEUE_FAIL))
+                $keys[] = QUEUE_FAIL;
+            if ($redis->llen(QUEUE_SLOW))
+                $keys[] = QUEUE_SLOW;
+            if ($redis->llen(QUEUE_NORMAL))
+                $keys[] = QUEUE_NORMAL;
+            if ($redis->llen(QUEUE_QUICK))
+                $keys[] = QUEUE_QUICK;
+            if ($keys)
                 $queueData = $redis->brpop(QUEUE_FAIL, QUEUE_QUICK, QUEUE_NORMAL, QUEUE_SLOW, 5);
-            }
-            if ($queueData) {
-                $queueName = $queueData[0];
-                $message = $queueData[1];
-                if ($worker_id == QUEUE_FAIL_WORKER_ID && $queueName == QUEUE_FAIL) {
-                    call_user_func_array('retryPostMessage', [&$message, &$redis]);
-                } else {
-                    call_user_func_array('postMessage', [&$message, &$redis]);
-
-                }
+        }
+        if ($queueData) {
+            $queueName = $queueData[0];
+            $message = $queueData[1];
+            if ($worker_id == QUEUE_FAIL_WORKER_ID && $queueName == QUEUE_FAIL) {
+                call_user_func_array('retryPostMessage', [&$message, &$redis]);
+            } else {
+                call_user_func_array('postMessage', [&$message, &$redis]);
 
             }
 
-        } catch (\RedisException $e) {
-            $redis = connectRedis();
+        }
+        else
+        {
+            sleep(5);
         }
 
     }
