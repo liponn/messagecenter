@@ -1,7 +1,8 @@
 <?php
 $pathDir = pathinfo(dirname(__DIR__));
 define("__ROOT_PATH__", $pathDir['dirname']);
-define("__FRAMEWORK_ROOT_PATH__", '/var/www/html/wl_framework');
+//define("__FRAMEWORK_ROOT_PATH__", "/home/liuqi/www/wl_framework");
+define("__FRAMEWORK_ROOT_PATH__", __ROOT_PATH__."/system");
 define("__APP_ROOT_PATH__", __ROOT_PATH__ . DIRECTORY_SEPARATOR . 'app');
 
 define("__APP_MODEL_PATH__", __APP_ROOT_PATH__ . DIRECTORY_SEPARATOR . 'model');
@@ -14,16 +15,15 @@ define('__FRAMEWORK_DATABASE_PATH__', __FRAMEWORK_ROOT_PATH__ . DIRECTORY_SEPARA
 define('__FRAMEWORK_DATABASE_DRIVES_PATH__', __FRAMEWORK_DATABASE_PATH__ . DIRECTORY_SEPARATOR . 'db_drives');
 
 require_once __FRAMEWORK_HELPERS_PATH__ . DIRECTORY_SEPARATOR . "functions.php";
-require_once __FRAMEWORK_DATABASE_PATH__ . DIRECTORY_SEPARATOR . "db.php";
-
+require_once __FRAMEWORK_DATABASE_PATH__ . DIRECTORY_SEPARATOR . "model.php";
 foreach (glob(__FRAMEWORK_DATABASE_DRIVES_PATH__. DIRECTORY_SEPARATOR . '*.php') as $file) {
     require_once $file;
 }
 
 $GLOBALS['config'] = include_once __DIR__ . DIRECTORY_SEPARATOR ."config.php";
 
-use DB\DB;
-class GeneratorTables extends DB
+use \Model\Model;
+class GeneratorTables extends Model
 {
     /**
      * 读取数据库表结构
@@ -32,11 +32,11 @@ class GeneratorTables extends DB
     public function loadTables()
     {
         try {
-            if ($this->dbConf['dbname']) {
+            if ($this->db->dbConf['dbname']) {
                 $buildInfo = array();
                 $tablesCache = __APP_MODEL_PATH__ . DIRECTORY_SEPARATOR .  'static.tables.php';
                 //解析数据库表结构
-                $tables = $this->parseTables($this->dbConf['dbname']);
+                $tables = $this->parseTables($this->db->dbConf['dbname']);
                 ob_start();
                 echo '<?php ';
                 echo "\r\n";
