@@ -10,7 +10,7 @@ return [
     "URL_ACTION_NAME" => 'a', // 默认动作参数名
     "URL_MODE" => 0, // 0 GET  1 PATHINFO
 
-    "REDIS_HOST" => "127.0.0.1", //redis主机地址
+    "REDIS_HOST" => "192.168.20.243", //redis主机地址
     "REDIS_PORT" => 6379, //redis端口
     "REDIS_PWD" => "wanglibao_ylb.com", //redis密码
     "REDIS_TIMEOUT" => 3, //redis超时时间
@@ -31,6 +31,7 @@ return [
     'SWOOLE_DAEMONIZE' => false,
     'SWOOLE_WORKER_NUM' => 8,
 
+  
     'MCQUEUE_API_URL' => 'https://php1.wanglibao.com/messagecenter/services.php',
 
     "PAGE_SIZE" => 20, //分页每页数量
