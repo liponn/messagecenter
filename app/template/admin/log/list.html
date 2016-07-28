@@ -34,14 +34,13 @@
             </thead>
             <tbody>
             {foreach $lists as $item}
-            <tr>
-                <!--<td><input class="ids" type="checkbox" name="id[]"></td>-->
-                <td>{$item.id}</td>
-                <td>{$item.tag_name}</td>
-                <td><span>{substr($item.send_data,0,15)}</span></td>
-                <td><span>{substr($item.response_data,0,15)}</span></td>
-                <td><span>{substr($item.url,0,15)}</span></td>
-                <td>{$item.err_code}</td>
+            <tr class="item">
+                <td class="id" data-id="{$item.id}">{$item.id}</td>
+                <td class="tag" data-tag="{$item.tag_name}">{$item.tag_name}</td>
+                <td class="request" data-request='{trim(trim($item.send_data,'}'),'{')}'>{substr($item.send_data,0,30)}</td>
+                <td class="response" data-response="{$item.response_data}">{substr($item.response_data,0,30)}</td>
+                <td class="url" data-url="{$item.url}">{substr($item.url,0,30)}</td>
+                <td class="err_num" data-err_num="{$item.err_code}">{$item.err_code}</td>
                 <td>
                     {if $item.status == 1}
                     <span class="adminstatus adminonline">成功</span>
@@ -59,6 +58,7 @@
     </div>
     {include file="footer.html"}
     <script>
+        {literal}
         $(".retry_send").click(function(){
            if($('.retry_send > button').length==0)
             {
@@ -83,4 +83,17 @@
         function load(){
             window.location.href="?c=log&a=lst&type=3&p="+getUrlParam('p');
         }
+        $('.item').on('click',function(){
+            var index = $(this).index();
+            var html = '';
+            html +='<table class="table table-striped">';
+            html +='<tr><td>ID</td><td>'+($(this).find('td.id').data('id'))+'</td></tr>';
+            html +='<tr><td>请求数据</td><td>{'+($(this).find('td.request').data('request'))+'}</td></tr>';
+            html +='<tr><td>响应数据</td><td>'+($(this).find('td.response').data('response'))+'</td></tr>';
+            html +='<tr><td>ip地址</td><td>'+($(this).find('td.url').data('url'))+'</td></tr>';
+            html +='<tr><td>错误号</td><td>'+($(this).find('td.err_num').data('err_num'))+'</td>';
+            html +='</table>';
+            layer.alert(html,{"area": '600px'});
+        });
+        {/literal}
     </script>

@@ -36,14 +36,14 @@ function retry()
     $logInfo = $logModel->where(array('id'=>$id))->get()->row();
     if(!$logInfo)
         ajaxReturn(array('error'=>'100','msg'=>'没有该条数据'));
-    //curl发送数据
+    $url = urldecode(trim($logInfo->url));
     $curl = new \Lib\Curl\Curl();
-    if (false !== stripos($logInfo->url, 'https')) {
+    if (false !== stripos($url, 'https')) {
         $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
         $curl->setOpt(CURLOPT_SSL_VERIFYHOST, false);
     }
     $curl->setOpt(CURLOPT_TIMEOUT, 3);
-    $curl->post($logInfo->url, json_decode($logInfo->send_data,true));
+    $curl->post($url, json_decode($logInfo->send_data,true));
     if (!$curl->errorCode || $curl->errorCode == 28) {
         $logSaveModel = new \Model\Log($logInfo->id);
         $logSaveModel->err_code = $curl->httpStatusCode;

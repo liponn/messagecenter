@@ -27,8 +27,16 @@ class Subscribe extends Model
             'current_page' => $page,
         );
         $pagination = new \Lib\Pagination($config);
-        //dump($pagination);die;
         $results = $this->listTable('', $pagination->start, $pagination->offset, "id desc,order desc")->resultArr();
+        if($results){
+            $tagModel = new Tags();
+            foreach ($results as $index => $item){
+                $tagModel->initArData($item['tag_id']);
+                $results[$index]['tag_title'] = $tagModel->title;
+                $results[$index]['tag_name'] = $tagModel->name;
+            }
+        }
+
         $page_num = $pagination->createLink();
         $data = array('num'=>$userNum,'info'=>$results,'page_num'=>$page_num);
         return $data;

@@ -125,6 +125,7 @@ function postMessage(&$message, &$redis)
 
     $tagName = $messageArr['tag'];
     $data = $messageArr['data'];
+    $data['tag'] = $tagName;
 
     $tagsModel = new \Model\Tags();
     $tagId = $tagsModel->getIdByName($tagName);
@@ -132,20 +133,21 @@ function postMessage(&$message, &$redis)
     $subscribeList = $subscribeModel->getByTagId($tagId);
     if ($subscribeList) {
         foreach ($subscribeList as $subscribe) {
+            $url =  urldecode(trim($subscribe->url));
             $curl = new \Lib\Curl\Curl();
-            if (false !== stripos($subscribe->url, 'https')) {
+            if (false !== stripos($url, 'https')) {
                 $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
                 $curl->setOpt(CURLOPT_SSL_VERIFYHOST, false);
             }
             $curl->setOpt(CURLOPT_TIMEOUT, 3);
-            $curl->post($subscribe->url, $data);
+            $curl->post($url, $data);
 
             $logModel = new \Model\Log();
             $logModel->subscribe_id = $subscribe->id;
             $logModel->tag_id = $tagId;
-            $logModel->send_data = json_encode($data);
+            $logModel->setField('send_data', json_encode($data),false);
             $logModel->response_data = $curl->rawResponse;
-            $logModel->url = $subscribe->url;
+            $logModel->url = $url;
             $logModel->create_time = date('Y-m-d H:i:s');
             if (!$curl->errorCode || $curl->errorCode == 28) {
                 $logModel->err_code = $curl->httpStatusCode;
@@ -178,14 +180,15 @@ function retryPostMessage(&$message, &$redis)
     $logId = $messageArr['data'];
 
     $logModel = new \Model\Log($logId);
+    $url = urldecode(trim($logModel->url));
     if ($logModel->retry <= 3) {
         $curl = new \Lib\Curl\Curl();
-        if (false !== stripos($logModel->url, 'https')) {
+        if (false !== stripos($url, 'https')) {
             $curl->setOpt(CURLOPT_SSL_VERIFYPEER, false);
             $curl->setOpt(CURLOPT_SSL_VERIFYHOST, false);
         }
         $curl->setOpt(CURLOPT_TIMEOUT, 3);
-        $curl->post($logModel->url, $logModel->send_data);
+        $curl->post($url, json_decode($logModel->send_data,true));
 
         $logModel->response_data = $curl->rawResponse;
         $logModel->retry = ++$logModel->retry;

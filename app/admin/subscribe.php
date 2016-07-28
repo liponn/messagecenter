@@ -30,20 +30,18 @@ function add()
 {
     $framework = getFrameworkInstance();
     if(IS_POST) {
-        $info = I('post.');
-        $data = array(
-            'tag_id' => $info['tag_id'],
-            'url' => $info['url'],
-            'remark' => $info['remark'],
-            'order' => $info['order'],
-            'status' => $info['status'],
-            'create_time' => date('Y-m-d H:i:s', time()),
-        );
         $SubscribeModel = new \Model\Subscribe();
-        //标签表中订阅数加1
         $tagModel  = new \Model\Tags();
-        $tag = $tagModel->getEditCountById($data['tag_id'],1);
-        $status = $SubscribeModel->add($data);
+        $info = I('post.');
+        $SubscribeModel->tag_id = $info['tag_id'];
+        $SubscribeModel->url = $info['url'];
+        $SubscribeModel->remark = $info['remark'];
+        $SubscribeModel->order = $info['order'];
+        $SubscribeModel->status = $info['status'];
+        $SubscribeModel->create_time = date('Y-m-d H:i:s', time());
+        $status = $SubscribeModel->save();
+        if($status)
+            $status = $tagModel->getEditCountById($info['tag_id'],1);
         urlJump($status,U('admin.php', ['c' => 'subscribe', 'a' => 'lst']),'add');
     }else
     {

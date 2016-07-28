@@ -16,9 +16,8 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th class="row-selected row-selected"><input class="check-all" type="checkbox"></th>
-                <th>id</th>
-                <th>标签id</th>
+                <th>标题</th>
+                <th>名称</th>
                 <th >通知地址</th>
                 <th >备注说明</th>
                 <th >排序</th>
@@ -31,10 +30,9 @@
             <tbody>
             {foreach $lists as $item}
             <tr>
-                <td><input class="ids" type="checkbox" name="id[]"></td>
-                <td>{$item.id}</td>
-                <td>{$item.tag_id}</td>
-                <td><span titile="{$item.url}">{substr($item.url,0,38)}</span></td>
+                <td>{$item.tag_title}</td>
+                <td>{$item.tag_name}</td>
+                <td><span titile="{$item.url}">{$item.url}</span></td>
                 <td>{if empty($item.remark)}暂无{else}{$item.remark}{/if}</td>
                 <td>{$item.order}</td>
                 <td>
