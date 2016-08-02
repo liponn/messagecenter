@@ -34,7 +34,7 @@ function add()
         $tagModel  = new \Model\Tags();
         $info = I('post.');
         $SubscribeModel->tag_id = $info['tag_id'];
-        $SubscribeModel->url = $info['url'];
+        $SubscribeModel->url =  htmlspecialchars_decode(trim($info['url']));
         $SubscribeModel->remark = $info['remark'];
         $SubscribeModel->order = $info['order'];
         $SubscribeModel->status = $info['status'];
@@ -63,7 +63,7 @@ function edit()
         $info = I('post.');
         $data = array(
             'tag_id' => $info['tag_id'],
-            'url' => $info['url'],
+            'url' => htmlspecialchars_decode(trim($info['url'])),
             'remark' => $info['remark'],
             'order' => $info['order'],
             'status' => $info['status'],
