@@ -1,11 +1,5 @@
-<?php
-defined("__FRAMEWORKNAME__") or die("No permission to access!");
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2016/5/18
- * Time: 16:04
- */
+<?php defined("__FRAMEWORKNAME__") or die("No permission to access!");
+
 /**
  * 日志列表
  * @pageroute
@@ -13,18 +7,45 @@ defined("__FRAMEWORKNAME__") or die("No permission to access!");
 function lst()
 {
     $framework = getFrameworkInstance();
-    $logModel = new \Model\Log();
+
     $page = I('get.p/d', 1);
     $type = I('get.type/d',1);
-    $data = $logModel->getList($page,$type);
-    $userNum = $data['num'];
-    $results = $data['info'];
-    $page_num = $data['page_num'];
-    $framework->smarty->assign('total', $userNum);
-    $framework->smarty->assign('lists', $results);
-    $framework->smarty->assign("pagination_link",$page_num );
+    $tag = I("get.tag/s",'');
+
+    $logModel = new \Model\Log();
+    $tagModel = new \Model\Tags();
+
+    $where = [];
+    if(in_array($type,[0,1]))
+        $where['status'] = $type;
+    $tagRow = $tagModel->where(['title' => $tag])->get()->row();
+    if($tagRow)
+        $where['tag_id'] = $tagRow->id;
+
+
+    $total = $logModel->where($where)->countNums();
+    $pagination = new \Lib\Pagination([
+        'total' => $total,
+        'pagesize' => C('PAGE_SIZE'),
+        'current_page' => $page
+    ]);
+    $pageLink = $pagination->createLink();
+
+    $data = $logModel->where($where)->orderby(["id" => "DESC"])->limit($pagination->start,$pagination->offset)->get()->resultArr();
+    $tagList = $tagModel->get()->resultArr();
+    $tagMap = array_combine(array_column($tagList,'id'),$tagList);
+    
+    $btn = ["default","primary","success","info","warning","danger"];
+
+    $framework->smarty->assign('total', $total);
+    $framework->smarty->assign('lists', $data);
+    $framework->smarty->assign('btn', $btn);
+    $framework->smarty->assign('tagMap', $tagMap);
+    $framework->smarty->assign('tagList', $tagList);
+    $framework->smarty->assign("pagination_link", $pageLink);
     $framework->smarty->display('log/list.html');
 }
+
 /**
  * @pageroute
  * 发送重试

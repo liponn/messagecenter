@@ -11,10 +11,17 @@
         <li active="form01"class="{if $smarty.get.type eq '1' or $smarty.get.type eq ''}active{/if}"><a href="?c=log&a=lst&type=1">
             日志成功列表</a>
         </li>
-        <li active="form03"class="{if $smarty.get.type eq '3'}active{/if}"><a href="?c=log&a=lst&type=3">
+        <li active="form03"class="{if $smarty.get.type eq '0'}active{/if}"><a href="?c=log&a=lst&type=0">
             日志失败列表</a>
         </li>
     </ul>
+    <div id="usertags" style="word-wrap: break-word;line-height: 2;word-wrap: break-word;line-height: 2;clear:both;">
+        {if !empty(tagList)}
+            {foreach $tagList as $item}
+            <a href="{U('admin.php',['c'=>'log','a'=>'lst','type'=> I('get.type',1),'p'=> I('get.p',1),'tag' => $item.title])}" class="btn-sm btn-{$btn[ceil($item.id % 6)]}" style="margin: 5px auto 5px auto;" data-toggle="tooltip" title="{$item.title}" >{$item.title}</a>&nbsp;
+            {/foreach}
+        {/if}
+    </div>
     <div class="table-responsive">
         <table class="table table-striped">
             <thead>
@@ -36,7 +43,7 @@
             {foreach $lists as $item}
             <tr class="item">
                 <td class="id" data-id="{$item.id}">{$item.id}</td>
-                <td class="tag" data-tag="{$item.tag_name}">{$item.tag_name}</td>
+                <td class="tag" data-tag="{$tagMap[$item.tag_id]['title']}">{$tagMap[$item.tag_id]['title']}</td>
                 <td class="request" data-request='{trim(trim($item.send_data,'}'),'{')}'>{substr($item.send_data,0,30)}</td>
                 <td class="response" data-response="{htmlspecialchars($item.response_data)}">{htmlspecialchars(substr($item.response_data,0,30))}</td>
                 <td class="url" data-url="{$item.url}">{substr($item.url,0,30)}</td>
@@ -81,7 +88,8 @@
             };
         })
         function load(){
-            window.location.href="?c=log&a=lst&type=3&p="+getUrlParam('p');
+            var p = getUrlParam('p') ? getUrlParam('p') : 1;
+            window.location.href="?c=log&a=lst&type=1&p="+p;
         }
         $('.item').on('click',function(){
             var index = $(this).index();

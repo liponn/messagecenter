@@ -1,11 +1,5 @@
-<?php
-defined("__FRAMEWORKNAME__") or die("No permission to access!");
-/**
- * Created by PhpStorm.
- * User: Administrator
- * Date: 2016/5/18
- * Time: 16:20
- */
+<?php defined("__FRAMEWORKNAME__") or die("No permission to access!");
+
 /**
  * @pageroute
  */
@@ -24,6 +18,7 @@ function lst()
     $framework->smarty->assign("pagination_link",$page_num );
     $framework->smarty->display('tag/list.html');
 }
+
 /**
  * @pageroute
  */
@@ -48,6 +43,7 @@ function add()
         $framework->smarty->display('tag/add.html');
     }
 }
+
 /**
  * @pageroute
  */
@@ -77,6 +73,7 @@ function edit()
         $framework->smarty->display('tag/edit.html');
     }
 }
+
 /**
  * @pageroute
  */
