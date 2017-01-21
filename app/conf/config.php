@@ -35,6 +35,7 @@ return [
     'SWOOLE_DAEMONIZE' => true,
     'SWOOLE_WORKER_NUM' => 8,
 
+    'COOKIE_DOMAIN' => '.wanglibao.com',
 
     "SMARTY_CACHING" => false, //是否缓存
     "SMARTY_FORCE_COMPILE" => true, //强制编译

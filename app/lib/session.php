@@ -13,8 +13,6 @@ namespace Lib;
  */
 class Session
 {
-    //session cookie作用域
-    const COOKIE_DOMAIN = ".wanglibao.com";
     //session 名称
     const SESSION_NAME = "WANGLIBAO_TOKEN";
     //session最大生存周期
@@ -30,7 +28,7 @@ class Session
     public static function init($sid = '')
     {
         @session_name(self::SESSION_NAME);
-        @ini_set("session.cookie_domain", self::COOKIE_DOMAIN);
+        @ini_set("session.cookie_domain", C('COOKIE_DOMAIN'));
 
         //判断请求来源
         $device = getAgent('platform');
